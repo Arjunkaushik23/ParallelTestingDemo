@@ -1,9 +1,9 @@
 pipeline {
     agent any
     tools {
-            maven 'maven' // Use the name you have configured for Maven
-            jdk 'jdk-22' // Use the name you have configured for JDK
-        }
+        maven 'maven' // Use the name you have configured for Maven
+        jdk 'jdk-22' // Use the name you have configured for JDK
+    }
     stages {
         stage('Build') {
             steps {
@@ -12,25 +12,9 @@ pipeline {
             }
         }
         stage('Test') {
-            parallel {
-                stage('Test1') {
-                    steps {
-                        // Run first set of tests
-                        bat 'mvn test -DsuiteXmlFile=src/test/resources/testng.xml -Dtest=com.example.testing.ExampleTest1'
-                    }
-                }
-                stage('Test2') {
-                    steps {
-                        // Run second set of tests
-                        bat 'mvn test -DsuiteXmlFile=src/test/resources/testng.xml -Dtest=com.example.testing.ExampleTest2'
-                    }
-                }
-                stage('Test3') {
-                    steps {
-                        // Run third set of tests
-                        bat 'mvn test -DsuiteXmlFile=src/test/resources/testng.xml -Dtest=com.example.testing.ExampleTest3'
-                    }
-                }
+            steps {
+                // Run tests using testng.xml
+                bat 'mvn test -DsuiteXmlFile=src/test/resources/testng.xml'
             }
         }
     }
